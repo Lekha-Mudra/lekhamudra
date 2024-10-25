@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image";
-import LoginPage from "./login/page";
+import LoginPage from "./auth/page";
 import { Button } from "@/app/ui/button"
 import { Moon, Sun, FileText } from 'lucide-react'
 import { useState } from "react";
