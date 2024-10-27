@@ -36,3 +36,5 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 ## Lekhamudra is Nepalese document sharing app with OCR feature
+
+It is intended to be opensource and we want more and more contributors for it.
