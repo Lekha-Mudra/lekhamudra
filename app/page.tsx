@@ -3,7 +3,7 @@ import Image from "next/image";
 import LoginPage from "./auth/page";
 import { Button } from "@/app/ui/button"
 import { Moon, Sun, FileText } from 'lucide-react'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import clsx from "clsx";
 
 
@@ -13,7 +13,6 @@ export default function Home() {
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode)
   }
-
   return (
     <>
     <div className={`h-screen w-screen ${isDarkMode ? 'bg-black' : ''}`}>

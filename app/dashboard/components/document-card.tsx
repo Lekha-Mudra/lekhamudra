@@ -1,3 +1,5 @@
+'use client';
+
 import { Clock, FileText, MoreVertical, Star } from "lucide-react";
 import { Button } from "@/app/ui/button";
 import {
@@ -6,7 +8,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/app/dashboard/components/card";
+} from "@/app/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,7 +21,7 @@ interface Document {
   title: string;
   lastModified: string;
   starred: boolean;
-  type: string;
+  type:String;
 }
 
 interface DocumentCardProps {
@@ -36,8 +38,8 @@ export function DocumentCard({ document }: DocumentCardProps) {
         <div className="flex items-center space-x-1">
           <Button
             variant="ghost"
-            size="lg"
-            className="h-8 w-8 text-muted-foreground hover:text-primary"
+            size="sm"
+            className="h-10 w-10 text-muted-foreground hover:text-primary"
           >
             <Star
               className={`h-4 w-4 ${
@@ -49,8 +51,8 @@ export function DocumentCard({ document }: DocumentCardProps) {
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
-                size="lg"
-                className="h-8 w-8 text-muted-foreground hover:text-primary"
+                size="sm"
+                className="h-10 w-10 text-muted-foreground hover:text-primary"
               >
                 <MoreVertical className="h-4 w-4" />
               </Button>
