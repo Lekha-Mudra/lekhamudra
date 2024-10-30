@@ -172,7 +172,7 @@ export function Sidebar() {
             key={item.label}
             variant="ghost"
             size="sm"
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={() => console.log("clicked")}
             className="flex flex-col items-center"
           >
             <item.icon className="h-6 w-6" />
