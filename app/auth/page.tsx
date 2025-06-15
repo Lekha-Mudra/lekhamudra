@@ -1,65 +1,158 @@
 // /app/auth/page.tsx
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 import { Button } from "@/app/ui/button";
 import { Input } from "@/app/ui/input";
 import { Label } from "@/app/ui/label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/app/ui/card";
-import { Github, Apple } from 'lucide-react';
-import Image from 'next/image';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/app/ui/card";
+import { Github, Apple } from "lucide-react";
+import Image from "next/image";
 
 interface LoginPageProps {
-    isDarkMode: boolean;
+  isDarkMode: boolean;
 }
 
 export default function AuthPage({ isDarkMode }: LoginPageProps) {
   const [isLogin, setIsLogin] = useState(true); // toggle between Login and Sign Up
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    if (!isLogin && password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+    try {
+      let res;
+      if (isLogin) {
+        const form = new URLSearchParams();
+        form.append("username", email);
+        form.append("password", password);
+        res = await fetch("http://localhost:8000/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: form.toString(),
+        });
+      } else {
+        res = await fetch("http://localhost:8000/auth/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password, full_name: fullName }),
+        });
+      }
+      if (res.ok) {
+        const data = await res.json();
+        localStorage.setItem("token", data.access_token);
+        window.location.reload();
+      } else {
+        const err = await res.json();
+        setError(err.detail || "Authentication failed");
+      }
+    } catch (err) {
+      setError("Network error");
+    }
+  };
 
   return (
-    <div className={`min-h-screen flex items-center justify-center p-4 bg-background text-foreground ${isDarkMode ? 'dark' : ''}`}>
+    <div
+      className={`min-h-screen flex items-center justify-center p-4 bg-background text-foreground ${
+        isDarkMode ? "dark" : ""
+      }`}
+    >
       <Card className="w-full max-w-md">
         <CardHeader>
           <div className="flex justify-center mb-4">
-            <Image src="/logo-sm.png" width={512} height={512} alt="logo" className="h-12 w-12" />
+            <Image
+              src="/logo-sm.png"
+              width={512}
+              height={512}
+              alt="logo"
+              className="h-12 w-12"
+            />
           </div>
           <CardTitle className="text-center">
-            {isLogin ? 'Sign in to Your Account' : 'Create an Account'}
+            {isLogin ? "Sign in to Your Account" : "Create an Account"}
           </CardTitle>
           <CardDescription className="text-center">
-            {isLogin ? 'Enter your email and password to access your account' : 'Enter your details to sign up'}
+            {isLogin
+              ? "Enter your email and password to access your account"
+              : "Enter your details to sign up"}
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
             {!isLogin && (
               <div className="space-y-2">
                 <Label htmlFor="name">Full Name</Label>
-                <Input id="name" type="text" placeholder="John Doe" required />
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="John Doe"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  required
+                />
               </div>
             )}
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="john@example.com" required />
+              <Input
+                id="email"
+                type="email"
+                placeholder="john@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" required />
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
             </div>
             {!isLogin && (
               <div className="space-y-2">
                 <Label htmlFor="confirm-password">Confirm Password</Label>
-                <Input id="confirm-password" type="password" required />
+                <Input
+                  id="confirm-password"
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
               </div>
             )}
-            <Button type="submit" className="w-full">{isLogin ? 'Sign In' : 'Sign Up'}</Button>
+            {error && <div className="text-red-500 text-sm">{error}</div>}
+            <Button type="submit" className="w-full">
+              {isLogin ? "Sign In" : "Sign Up"}
+            </Button>
           </form>
           <div className="relative my-4">
             <div className="absolute inset-0 flex items-center">
               <span className="w-full border-t border-muted-foreground"></span>
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+              <span className="bg-background px-2 text-muted-foreground">
+                Or continue with
+              </span>
             </div>
           </div>
           {/* Social Login Buttons (Optional) */}
@@ -105,7 +198,7 @@ export default function AuthPage({ isDarkMode }: LoginPageProps) {
           <p className="text-sm text-muted-foreground">
             {isLogin ? (
               <>
-                Don't have an account?{' '}
+                Don't have an account?{" "}
                 <span
                   onClick={() => setIsLogin(false)}
                   className="text-primary hover:underline cursor-pointer"
@@ -115,7 +208,7 @@ export default function AuthPage({ isDarkMode }: LoginPageProps) {
               </>
             ) : (
               <>
-                Already have an account?{' '}
+                Already have an account?{" "}
                 <span
                   onClick={() => setIsLogin(true)}
                   className="text-primary hover:underline cursor-pointer"
