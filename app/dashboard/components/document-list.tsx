@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { Clock, File, MoreVertical, Star } from "lucide-react";
 import { Button } from "@/app/ui/button";
@@ -59,7 +59,10 @@ export function DocumentList() {
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {documents.map((doc) => (
-          <Card key={doc.id} className="group hover:border-primary/50 transition-colors">
+          <Card
+            key={doc.id}
+            className="group hover:border-primary/50 transition-colors"
+          >
             <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium line-clamp-2">
                 {doc.title}

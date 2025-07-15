@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { Clock, FileText, MoreVertical, Star } from "lucide-react";
 import { Button } from "@/app/ui/button";
@@ -21,7 +21,7 @@ interface Document {
   title: string;
   lastModified: string;
   starred: boolean;
-  type:String;
+  type: String;
 }
 
 interface DocumentCardProps {
