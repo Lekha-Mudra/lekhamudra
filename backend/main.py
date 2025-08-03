@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Depends, status, APIRouter
+'''from fastapi import FastAPI, HTTPException, Depends, status, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import jwt, JWTError
@@ -187,6 +187,26 @@ def delete_doc(doc_id: int, current_user: dict = Depends(get_current_user)):
 
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(auth_router)
+app.include_router(doc_router)
+'''
+
+
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from auth.router import router as auth_router
+from documents.router import router as doc_router
+
+app = FastAPI()
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],
