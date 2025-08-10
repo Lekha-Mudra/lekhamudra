@@ -2,6 +2,14 @@ fastapi
 uvicorn
 python-jose[cryptography]
 passlib[bcrypt]
+SQLAlchemy>=2.0
+psycopg2-binary
+alembic
+python-dotenv
+pydantic[email]
+pydantic-settings
+pytest
+httpx
 
-# For CORS
-fastapi[all] 
+# For CORS & extras
+fastapi[all]

@@ -1,2 +1,1 @@
-users_db = {}
-documents_db = {}
+# (legacy removed placeholder)
