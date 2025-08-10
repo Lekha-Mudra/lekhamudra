@@ -37,26 +37,28 @@ export default function AuthPage({ isDarkMode }: LoginPageProps) {
     }
     try {
       let res;
+      const API_BASE =
+        process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000/api/v1";
       if (isLogin) {
         const form = new URLSearchParams();
         form.append("username", email);
         form.append("password", password);
-        res = await fetch("http://localhost:8000/auth/login", {
+        res = await fetch(`${API_BASE}/auth/login`, {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
           body: form.toString(),
+          credentials: "include",
         });
       } else {
-        res = await fetch("http://localhost:8000/auth/signup", {
+        res = await fetch(`${API_BASE}/auth/signup`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password, full_name: fullName }),
+          credentials: "include",
         });
       }
       if (res.ok) {
-        const data = await res.json();
-        localStorage.setItem("token", data.access_token);
-        window.location.reload();
+        window.location.href = "/dashboard"; // session cookie already set
       } else {
         const err = await res.json();
         setError(err.detail || "Authentication failed");

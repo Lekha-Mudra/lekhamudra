@@ -12,10 +12,25 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      router.push("/dashboard");
-    }
+    let cancelled = false;
+    (async () => {
+      try {
+        const API_BASE =
+          process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000/api/v1";
+        const res = await fetch(`${API_BASE}/auth/me`, {
+          credentials: "include",
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.authenticated && !cancelled) router.push("/dashboard");
+        }
+      } catch (_) {
+        /* ignore */
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, [router]);
 
   const toggleTheme = () => {
