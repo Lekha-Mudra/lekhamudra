@@ -10,9 +10,19 @@ import { useRouter } from "next/navigation";
 
 export function Header() {
   const router = useRouter();
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    router.push("/");
+  const handleLogout = async () => {
+    try {
+      const API_BASE =
+        process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000/api/v1";
+      await fetch(`${API_BASE}/auth/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch (_) {
+      // ignore network errors; still redirect
+    } finally {
+      router.push("/");
+    }
   };
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
