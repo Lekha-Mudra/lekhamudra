@@ -1,16 +1,15 @@
 from pydantic import BaseModel
-from typing import Optional, List
 
 
 class User(BaseModel):
     email: str
-    full_name: Optional[str] = None
+    full_name: str | None = None
     hashed_password: str
 
 
 class UserIn(BaseModel):
     email: str
-    full_name: Optional[str] = None
+    full_name: str | None = None
     password: str
 
 
