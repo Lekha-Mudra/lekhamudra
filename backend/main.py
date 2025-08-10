@@ -1,4 +1,4 @@
-'''from fastapi import FastAPI, HTTPException, Depends, status, APIRouter
+"""from fastapi import FastAPI, HTTPException, Depends, status, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import jwt, JWTError
@@ -197,8 +197,7 @@ app.add_middleware(
 
 app.include_router(auth_router)
 app.include_router(doc_router)
-'''
-
+"""
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware

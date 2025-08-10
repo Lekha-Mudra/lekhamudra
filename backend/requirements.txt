@@ -4,4 +4,4 @@ python-jose[cryptography]
 passlib[bcrypt]
 
 # For CORS
-fastapi[all] 
+fastapi[all]
