@@ -10,7 +10,20 @@ import { useRouter } from "next/navigation";
 
 export function Header() {
   const router = useRouter();
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        await fetch("http://localhost:8000/auth/logout", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
+      } catch (err) {
+        console.error("Logout failed:", err);
+      }
+    }
     localStorage.removeItem("token");
     router.push("/");
   };

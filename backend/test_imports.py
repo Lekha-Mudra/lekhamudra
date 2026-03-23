@@ -11,10 +11,12 @@ try:
     print("✓ FastAPI import successful")
     
     # Test our modules
-    from models import UserIn, Token, Document
+    from auth.schemas import UserIn, Token
+    from documents.schemas import Document
     print("✓ Models import successful")
     
-    from database import users_db, documents_db
+    from auth.database import users_db
+    from documents.database import documents_db
     print("✓ Database import successful")
     
     from auth.security import get_password_hash, verify_password, create_access_token, get_user, get_current_user

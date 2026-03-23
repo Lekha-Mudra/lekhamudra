@@ -204,6 +204,11 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from auth.router import router as auth_router
 from documents.router import router as doc_router
+from database import engine, Base
+import auth.models
+import documents.models
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 

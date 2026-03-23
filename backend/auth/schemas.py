@@ -1,29 +1,21 @@
 from pydantic import BaseModel
-from typing import Optional, List
-
+from typing import Optional
 
 class User(BaseModel):
+    id: int
     email: str
     full_name: Optional[str] = None
     hashed_password: str
 
+    class Config:
+        orm_mode = True
+        from_attributes = True
 
 class UserIn(BaseModel):
     email: str
     full_name: Optional[str] = None
     password: str
 
-
 class Token(BaseModel):
     access_token: str
     token_type: str
-
-
-class Document(BaseModel):
-    id: int
-    title: str
-    content: str = ""
-    owner: str
-    last_modified: str = ""
-    # shared_with: List[str] = []
-    # public_token: Optional[str] = None

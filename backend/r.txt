@@ -1,0 +1,1 @@
+["/openapi.json", "/docs", "/docs/oauth2-redirect", "/redoc", "/auth/signup", "/auth/login", "/auth/logout", "/documents/", "/documents/", "/documents/{doc_id}", "/documents/{doc_id}", "/documents/{doc_id}"]
