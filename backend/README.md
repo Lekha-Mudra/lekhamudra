@@ -25,7 +25,14 @@
      source .venv/bin/activate
      ```
 
-4. **Install dependencies:**
+4. **Configure environment variables (optional):**
+
+   Copy `.env.example` to `.env` and update the values as needed:
+   ```bash
+   cp .env.example .env
+   ```
+
+5. **Install dependencies:**
 
    ```bash
    uv pip install -r requirements.txt

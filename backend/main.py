@@ -205,19 +205,20 @@ from fastapi.middleware.cors import CORSMiddleware
 from auth.router import router as auth_router
 from documents.router import router as doc_router
 from database import engine, Base
+from config import settings
 import auth.models
 import documents.models
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+app = FastAPI(title=settings.app_name, version=settings.app_version, debug=settings.debug)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=settings.cors_origins,
+    allow_credentials=settings.cors_allow_credentials,
+    allow_methods=settings.cors_allow_methods,
+    allow_headers=settings.cors_allow_headers,
 )
 
 app.include_router(auth_router)

@@ -7,9 +7,10 @@ from sqlalchemy.orm import Session
 
 from database import get_db
 from auth.models import User, TokenBlacklist
+from config import settings
 
-SECRET_KEY = "secret-key"
-ALGORITHM = "HS256"
+SECRET_KEY = settings.secret_key
+ALGORITHM = settings.algorithm
 
 # pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
@@ -22,9 +23,12 @@ def verify_password(plain_password, hashed_password):
     # return pwd_context.verify(plain_password, hashed_password)
     return get_password_hash(plain_password) == hashed_password  # Placeholder for verification
 
-def create_access_token(data: dict, expires_delta: timedelta = timedelta(minutes=60)):
+def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode = data.copy()
-    expire = datetime.utcnow() + expires_delta
+    if expires_delta:
+        expire = datetime.utcnow() + expires_delta
+    else:
+        expire = datetime.utcnow() + timedelta(minutes=settings.access_token_expire_minutes)
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
