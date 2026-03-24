@@ -32,6 +32,18 @@
    cp .env.example .env
    ```
 
+   **Azure Blob Storage Setup (Optional):**
+   - Create an Azure Storage Account in the Azure Portal
+   - Get the account name, account key, and connection string
+   - Update the Azure settings in `.env`:
+     ```
+     AZURE_STORAGE_ACCOUNT_NAME=your-storage-account-name
+     AZURE_STORAGE_ACCOUNT_KEY=your-storage-account-key
+     AZURE_STORAGE_CONNECTION_STRING=your-connection-string
+     AZURE_STORAGE_CONTAINER_NAME=documents
+     ```
+   - The container will be created automatically when the app starts
+
 5. **Install dependencies:**
 
    ```bash

@@ -211,6 +211,14 @@ import documents.models
 
 Base.metadata.create_all(bind=engine)
 
+# Initialize Azure Blob Storage if configured
+try:
+    from azure_blob import azure_blob
+    azure_blob.create_container_if_not_exists()
+    print("Azure Blob Storage initialized.")
+except Exception as e:
+    print(f"Azure Blob Storage not configured or failed to initialize: {e}")
+
 app = FastAPI(title=settings.app_name, version=settings.app_version, debug=settings.debug)
 
 app.add_middleware(

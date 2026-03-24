@@ -12,6 +12,12 @@ class Settings(BaseSettings):
     # Database settings
     database_url: str = "sqlite:///./sql_app.db"
 
+    # Azure Blob Storage settings
+    azure_storage_account_name: str = ""
+    azure_storage_account_key: str = ""
+    azure_storage_connection_string: str = ""
+    azure_storage_container_name: str = "documents"
+
     # CORS settings
     cors_origins: List[str] = ["http://localhost:3000"]
     cors_allow_credentials: bool = True
